@@ -27,6 +27,7 @@
             background-color: #55ACEE;
         }
         .content {
+            height: 95%;
             padding: 20px;
         }
             /* [END styles] */
@@ -59,16 +60,27 @@
 
     <div class="content">
         <div horizontal layout>
-            <div flex two><img src="../bower_components/core-list/images/0.png" style="width: 100%;" /></div>
-            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
-            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
-            <div flex two><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
+            <div vertical layout>
+                <div horizontal layout>
+                    <div flex><img src="../bower_components/core-list/images/0.png" style="width: 100%;" /></div>
+                </div>
+                <div horizontal layout>
+                    <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+                    <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+                </div>
+                <div horizontal layout>
+                    <div flex><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
+                    <div flex><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
+                </div>
+            </div>
         </div>
         <div horizontal layout>
-            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
-            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
-            <div flex two><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
-            <div flex two><img src="../bower_components/core-list/images/0.png" style="width: 100%;" /></div>
+            <div vetical layout>
+                <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+                <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+                <div flex two><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
+                <div flex two><img src="../bower_components/core-list/images/0.png" style="width: 100%;" /></div>
+            </div>
         </div>
     </div>
 </core-scaffold>
