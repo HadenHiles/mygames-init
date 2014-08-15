@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- [START imports] -->
+    <script
+            src="../bower_components/platform/platform.js">
+    </script>
+    <link rel="import"
+          href="../bower_components/core-toolbar/core-toolbar.html">
+    <link rel="import"
+          href="../bower_components/core-menu/core-menu.html">
+    <link rel="import"
+          href="../bower_components/core-item/core-item.html">
+    <link rel="import"
+          href="../bower_components/core-header-panel/core-header-panel.html">
+    <link rel="import"
+          href="../bower_components/core-drawer-panel/core-drawer-panel.html">
+    <link rel="import"
+          href="../bower_components/core-scaffold/core-scaffold.html">
+    <!-- [END imports] -->
+    <style shim-shadowdom>
+            /* [START styles] */
+        body {
+            font-family: sans-serif;
+        }
+        #navheader {
+            background-color: #55ACEE;
+        }
+        .content {
+            padding: 20px;
+        }
+            /* [END styles] */
+            /* secret demo-only styles */
+        core-scaffold /deep/ #drawer {
+            width: 140px;
+        }
+        core-scaffold /deep/ #main {
+            left: 140px;
+            background: #33B679;
+        }
+    </style>
+</head>
+<body unresolved>
+<!-- [START html] -->
+<core-scaffold>
+
+    <core-header-panel navigation flex>
+        <core-toolbar id="navheader">
+            <span>Navigate</span>
+        </core-toolbar>
+        <core-menu>
+            <core-item label="Test One"></core-item>
+            <core-item label="Test Two"></core-item>
+        </core-menu>
+    </core-header-panel>
+
+    <span tool><img src="../bower_components/core-list/images/3.png" style="height: 50px;" /></span>
+    <span tool>Name</span>
+
+    <div class="content">
+        <div horizontal layout>
+            <div flex two><img src="../bower_components/core-list/images/0.png" style="width: 100%;" /></div>
+            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+            <div flex two><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
+        </div>
+        <div horizontal layout>
+            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+            <div flex><img src="../bower_components/core-list/images/1.png" style="width: 100%;" /></div>
+            <div flex two><img src="../bower_components/core-list/images/2.png" style="width: 100%;" /></div>
+            <div flex two><img src="../bower_components/core-list/images/0.png" style="width: 100%;" /></div>
+        </div>
+    </div>
+</core-scaffold>
+<!-- [END html] -->
+</body>
+</html>
