@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select a Game</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../bower_components/platform/platform.js"></script>
+    <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+    <link rel="import" href="../bower_components/paper-input/paper-input.html">
+    <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+	<link rel="import" href="flash-game-element.html">
+    <style>
+        CoreStyle.g.paperInput.focusedColor {
+            color : green;
+        }
+
+        CoreStyle.g.paperInput.invalidColor {
+            color : red;
+        }
+    </style>
+</head>
+<body>
+<game-scraper-element></game-scraper-element>
+<polymer-element name="game-scraper-element" attributes="url">
+    <template>
+        <paper-input floatingLabel label="Enter a URL" type="url" pattern="https?://.+" error="Input is not a URL!"
+                     value="{{url}}"></paper-input>
+        <!--<paper-fab icon="favorite" class="mini" on-tap="{{go}}"></paper-fab>-->
+        <core-ajax id="ajax" auto
+                url="{{proxifyUrl(url)}}"
+                handleAs="document"
+                on-core-response="{{handleResponse}}">
+                </core-ajax>
+        <template repeat="{{gameUrl in gameUrls(sourceDocument)}}">
+			<h2>{{gameUrl}}</h2>
+            <flash-game-element url="{{gameUrl}}" width="400" height="350"></flash-game-element>
+        </template>
+    </template>
+	<script>
+		(function() {
+			Polymer('game-scraper-element', {
+				ready: function () {
+					this.url = location.href;
+					this.sourceDocument = "todd really does rock; says Haden!";
+				},
+				
+				proxifyUrl : function(url){
+					var proxyUrl = "";
+					if(url !== undefined && url != ""){
+						proxyUrl = location.origin + "/proxy.php?q=" + btoa(url);
+					}
+					return proxyUrl;
+				},
+				handleResponse: function (e) {
+					this.sourceDocument = e.detail.response;
+				},
+				elementSelector : 'object embed[src], object[data]',
+				gameUrls : function(document) {
+					var jDoc = $(document);
+					var gameUrls = [];
+					var originalUrl;
+					var element = this;
+					// Find game urls in html element src and data attributes.
+					jDoc.find(this.elementSelector).each(function (e) {
+						originalUrl = $(this).attr('src') || $(this).attr('data');
+						gameUrls.push(element.makeAbsoluteUrl(originalUrl));
+					});
+					// Find game urls in script element source.
+					var rawMatches;
+					var cleansedMatch;
+					jDoc.find('script').each(function () {
+						rawMatches = element.getMatches(this.textContent, /(['|"])([http|\/\/].*\.swf.*)(['|"])/igm, 2);
+						$(rawMatches).each( function () {
+							cleansedMatch = this.replace(/"|'/g,'');
+							var end = cleansedMatch.indexOf(',');
+							if (end == -1) end = cleansedMatch.length; 
+							cleansedMatch = cleansedMatch.substr(0, end);
+							gameUrls.push(element.makeAbsoluteUrl(cleansedMatch));
+						});
+					});
+					return this.unique(gameUrls);
+				},
+				unique : function(array) {
+					return array.filter(function(item, itemIndex) {
+						return (array.indexOf(item) == itemIndex) 
+					});
+				},
+				makeAbsoluteUrl : function(originalUrl) {
+					var absoluteUrl;
+					if (/^http/i.test(originalUrl)) {
+						absoluteUrl = originalUrl;
+					} else if (/^\/\//i.test(originalUrl)) {
+						absoluteUrl = location.protocol + originalUrl;
+					} else if (/^\/[^\/]/i.test(originalUrl)) {
+						absoluteUrl = location.protocol + '//' + location.host + originalUrl;
+					} else {
+						absoluteUrl = location.href.substr(0, location.href.lastIndexOf("/") + 1) + originalUrl;
+					}
+					return absoluteUrl;
+				},
+				getMatches : function(string, regex, capturingGroupIndex) {
+					capturingGroupIndex || (capturingGroupIndex = 1); // default to the first capturing group
+					var matches = [];
+					var match;
+					while (match = regex.exec(string)) {
+						matches.push(match[capturingGroupIndex]);
+					}
+					return matches;
+				}
+			});
+		})();
+	</script>
+</polymer-element>
+</body>
+</html>
