@@ -1,0 +1,22 @@
+##
+## Development settings!!!
+##
+## Very Cache adverse...
+##
+<IfModule mod_expires.c>
+ExpiresActive On
+# Everything expires in a couple minutes, unless specified otherwise.
+<FilesMatch ".*">
+	ExpiresDefault "access plus 2 minutes"
+</FilesMatch>
+
+<FilesMatch "\.(htm|html|js|css)$">
+	ExpiresDefault "access plus 0 seconds"
+</FilesMatch>
+
+
+# Give images and other static stuff some cache time, but not too much, we may be tweaking them too.
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|swf)$">
+	ExpiresDefault "modification plus 5 minutes"
+</FilesMatch>
+</IfModule>

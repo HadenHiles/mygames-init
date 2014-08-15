@@ -1,0 +1,7 @@
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 hour"
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|swf)$">
+	ExpiresDefault "modification plus 1 day"
+</FilesMatch>
+</IfModule>
