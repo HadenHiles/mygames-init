@@ -7,7 +7,11 @@
     <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+
+    <!--Flash game element imports-->
 	<link rel="import" href="flash-game-element.html">
+    <link rel="import" href="../core-selector/core-selector.html">
+    <link rel="import" href="../core-layout/core-layout.html">
     <style>
         CoreStyle.g.paperInput.focusedColor {
             color : green;
@@ -15,6 +19,34 @@
 
         CoreStyle.g.paperInput.invalidColor {
             color : red;
+        }
+        /*Selected element styles*/
+        .list {
+            display: block;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            background: #666;
+            color: white;
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .list > * {
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .list > *.core-selected {
+            background: #333;
+            padding: 10px;
+        }
+
+        div.core-selected:after {
+            content: "\2713";
+            padding: 20px;
         }
     </style>
 </head>
@@ -32,11 +64,14 @@
                 </core-ajax>
         <template repeat="{{gameUrl in gameUrls(sourceDocument)}}">
 			<h2>{{gameUrl}}</h2>
-            <flash-game-element url="{{gameUrl}}" width="400" height="350"></flash-game-element>
+            <core-selector class="list" selected="0">
+                <flash-game-element url="{{gameUrl}}" width="400" height="350"></flash-game-element>
+            </core-selector>
         </template>
     </template>
 	<script>
 		(function() {
+            Polymer('selected-element');
 			Polymer('game-scraper-element', {
 				ready: function () {
 					this.url = location.href;
