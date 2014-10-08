@@ -1,9 +1,12 @@
 <polymer-element name="flash-game-element" attributes="url, width, height" width="300" height="250">
     <template>
-		<object codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab" width="{{width}}" height="{{height}}">
-			<param name="allowFullScreen" value="true">
-			<embed class="game" src="{{url}}" width="{{width}}" height="{{height}}" allowfullscreen="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer">
-		</object>
+        <section>
+            <h2>{{url}}</h2>
+            <object codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab" width="{{width}}" height="{{height}}">
+                <param name="allowFullScreen" value="true">
+                <embed class="game" src="{{url}}" width="{{width}}" height="{{height}}" allowfullscreen="true" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer">
+            </object>
+        </section>
     </template>
 	<script>
 		Polymer('flash-game-element');
