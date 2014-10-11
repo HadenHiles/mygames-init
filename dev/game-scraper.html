@@ -7,8 +7,12 @@
     <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
     <link rel="import" href="../bower_components/paper-input/paper-input.html">
     <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<<<<<<< HEAD
 
     <!--Flash game element imports-->
+=======
+    <link rel="import" href="../bower_components/core-selector/core-selector.html">
+>>>>>>> FETCH_HEAD
 	<link rel="import" href="flash-game-element.html">
     <link rel="import" href="../core-selector/core-selector.html">
     <link rel="import" href="../core-layout/core-layout.html">
@@ -54,6 +58,30 @@
 <game-scraper-element></game-scraper-element>
 <polymer-element name="game-scraper-element" attributes="url">
     <template>
+        <style>
+            .list {
+                display: block;
+                border: 1px solid #ccc;
+                border-bottom: none;
+                background: #666;
+                color: white;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            /*.list > * {*/
+                /*height: 40px;*/
+                /*line-height: 40px;*/
+                /*padding: 0 20px;*/
+                /*border-bottom: 1px solid #ccc;*/
+            /*}*/
+
+            .list > *.core-selected {
+                background: #333;
+                color: blueviolet;
+            }
+        </style>
         <paper-input floatingLabel label="Enter a URL" type="url" pattern="https?://.+" error="Input is not a URL!"
                      value="{{url}}"></paper-input>
         <!--<paper-fab icon="favorite" class="mini" on-tap="{{go}}"></paper-fab>-->
@@ -65,9 +93,20 @@
         <core-selector class="list" selected="0">
             <template repeat="{{gameUrl in gameUrls(sourceDocument)}}">
                 <h2>{{gameUrl}}</h2>
+<<<<<<< HEAD
                     <flash-game-element url="{{gameUrl}}" width="400" height="350"></flash-game-element>
             </template>
         </core-selector>
+=======
+                <flash-game-element url="{{gameUrl}}" width="400" height="350"></flash-game-element>
+            </template>
+        </core-selector>
+        <core-selector class="list" selected="0">
+            <flash-game-element url="http://www.addictinggames.com/" width="400" height="35"></flash-game-element>
+            <flash-game-element url="http://www.games.com/" width="400" height="35"></flash-game-element>
+            <flash-game-element url="http://www.addgames.com/" width="400" height="35"></flash-game-element>
+        </core-selector>
+>>>>>>> FETCH_HEAD
     </template>
 	<script>
 		(function() {
@@ -81,7 +120,8 @@
 				proxifyUrl : function(url){
 					var proxyUrl = "";
 					if(url !== undefined && url != ""){
-						proxyUrl = location.origin + "/proxy.php?q=" + btoa(url);
+//						proxyUrl = location.origin + "/proxy.php?q=" + btoa(url);
+                        proxyUrl = "http://moonrockfamily.ca/proxy.php?q=" + btoa(url);
 					}
 					return proxyUrl;
 				},
