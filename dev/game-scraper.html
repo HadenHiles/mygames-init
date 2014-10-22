@@ -4,11 +4,11 @@
     <title>Select a Game</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="../bower_components/platform/platform.js"></script>
-    <link rel="import" href="../bower_components/core-ajax/core-ajax.html">
-    <link rel="import" href="../bower_components/paper-input/paper-input.html">
-    <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
-    <link rel="import" href="../bower_components/core-selector/core-selector.html">
-	<link rel="import" href="flash-game-element.html">
+    <link rel="import" href="../bower_components/core-ajax/core-ajax.html"/>
+    <link rel="import" href="../bower_components/paper-input/paper-input.html"/>
+    <link rel="import" href="../bower_components/paper-fab/paper-fab.html"/>
+    <link rel="import" href="../bower_components/core-selector/core-selector.html"/>
+	<link rel="import" href="flash-game-element.html"/>
     <style>
         CoreStyle.g.paperInput.focusedColor {
             color : green;
@@ -28,7 +28,7 @@
                 display: block;
                 border: 1px solid #ccc;
                 border-bottom: none;
-                background: #666;
+                background: paleturquoise;
                 color: white;
                 list-style: none;
                 margin: 0;
@@ -43,33 +43,45 @@
             /*}*/
 
             .list > *.core-selected {
-                background: #333;
+                background: #95d2d2;
                 color: blueviolet;
             }
+            paper-input {
+                width: 100%;
+            }
+            flash-game-element {
+                min-width: 5em;
+                max-width: 20em;
+                min-height: 5em;
+                max-height: 20em;
+            }
         </style>
-        <paper-input floatingLabel label="Enter a URL" type="url" pattern="https?://.+" error="Input is not a URL!"
-                     value="{{url}}"></paper-input>
-        <!--<paper-fab icon="favorite" class="mini" on-tap="{{go}}"></paper-fab>-->
-        <core-ajax id="ajax" auto
-                url="{{proxifyUrl(url)}}"
-                handleAs="document"
-                on-core-response="{{handleResponse}}">
-                </core-ajax>
-        <core-selector class="list" selected="0">
-            <template repeat="{{gameUrl in gameUrls(sourceDocument)}}">
-                <h2>{{gameUrl}}</h2>
-                <flash-game-element url="{{gameUrl}}" width="400" height="350"></flash-game-element>
-            </template>
-        </core-selector>
-        <core-selector class="list" selected="0">
-            <flash-game-element url="http://www.addictinggames.com/" width="400" height="35"></flash-game-element>
-            <flash-game-element url="http://www.games.com/" width="400" height="35"></flash-game-element>
-            <flash-game-element url="http://www.addgames.com/" width="400" height="35"></flash-game-element>
-        </core-selector>
+        <div vertical layout >
+            <paper-input floatingLabel label="Enter a URL" type="url" pattern="https?://.+" error="Input is not a URL!"
+                         value="{{url}}"></paper-input>
+            <core-ajax id="ajax" auto
+                       url="{{proxifyUrl(url)}}"
+                       handleAs="document"
+                       on-core-response="{{handleResponse}}">
+            </core-ajax>
+            <!--<paper-fab icon="favorite" class="mini" on-tap="{{go}}"></paper-fab>-->
+            <core-selector horizontal layout around-justified wrap class="list" selected="0">
+                <template repeat="{{gameUrl in gameUrls(sourceDocument)}}">
+                    <flash-game-element url="{{gameUrl}}"></flash-game-element>
+                </template>
+            </core-selector>
+            <div flex>
+                <core-selector id="selector" class="list" valueattr="url" selected="0" on-core-activate="onSelection" horizontal layout around-justified wrap>
+                    <flash-game-element url="http://www.addictinggames.com/" ></flash-game-element>
+                    <flash-game-element url="http://www.games.com/" ></flash-game-element>
+                    <flash-game-element url="http://www.addgames.com/"></flash-game-element>
+                </core-selector>
+            </div>
+        </div>
     </template>
 	<script>
 		(function() {
-			Polymer('game-scraper-element', {
+			Polymer( {
 				ready: function () {
 					this.url = location.href;
 					this.sourceDocument = "todd really does rock; says Haden!";
@@ -138,7 +150,10 @@
 						matches.push(match[capturingGroupIndex]);
 					}
 					return matches;
-				}
+				},
+                onSelection : function() {
+                    console.log(this.$.selector.selected);
+                }
 			});
 		})();
 	</script>
