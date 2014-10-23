@@ -9,6 +9,7 @@
     <link rel="import" href="../bower_components/paper-fab/paper-fab.html"/>
     <link rel="import" href="../bower_components/core-selector/core-selector.html"/>
 	<link rel="import" href="flash-game-element.html"/>
+    <link rel="import" href="../core-layout/core-layout.html">
     <style>
         CoreStyle.g.paperInput.focusedColor {
             color : green;
@@ -16,6 +17,34 @@
 
         CoreStyle.g.paperInput.invalidColor {
             color : red;
+        }
+        /*Selected element styles*/
+        .list {
+            display: block;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            background: #666;
+            color: white;
+            list-style: none;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .list > * {
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .list > *.core-selected {
+            background: #333;
+            padding: 10px;
+        }
+
+        div.core-selected:after {
+            content: "\2713";
+            padding: 20px;
         }
     </style>
 </head>
@@ -71,7 +100,7 @@
                 </template>
             </core-selector>
             <div flex>
-                <core-selector id="selector" class="list" valueattr="url" selected="0" on-core-activate="onSelection" horizontal layout around-justified wrap>
+                <core-selector id="selector" class="list" valueattr="url" selected="0" on-core-activate="{{onSelection}}" horizontal layout around-justified wrap>
                     <flash-game-element url="http://www.addictinggames.com/" ></flash-game-element>
                     <flash-game-element url="http://www.games.com/" ></flash-game-element>
                     <flash-game-element url="http://www.addgames.com/"></flash-game-element>
@@ -151,8 +180,9 @@
 					}
 					return matches;
 				},
-                onSelection : function() {
-                    console.log(this.$.selector.selected);
+                onSelection : function(event) {
+                    console.log(event);
+                    alert("You selected " + event.target.selected);
                 }
 			});
 		})();
